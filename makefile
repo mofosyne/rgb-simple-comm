@@ -1,11 +1,10 @@
-# Simple Makefile for RGB SIMPLE COMM program
+APPROACHES = approaches/transition-clocked approaches/dark-clocked
 
-all: rgb-simple-comm.c
-	gcc -g -Wall -o rgb-simple-comm rgb-simple-comm.c
+all:
+	$(foreach d,$(APPROACHES),$(MAKE) -C $(d);)
 
 clean:
-	$(RM) rgb-simple-comm
-	$(RM) ./rgb-simple-comm_output.txt
+	$(foreach d,$(APPROACHES),$(MAKE) -C $(d) clean;)
 
-test: all
-	./rgb-simple-comm > ./rgb-simple-comm_output.txt
+test:
+	$(foreach d,$(APPROACHES),$(MAKE) -C $(d) test;)

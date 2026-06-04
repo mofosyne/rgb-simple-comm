@@ -1,0 +1,36 @@
+Dark-Clocked RGB Comm Test
+==========================
+
+# ENCODING Input
+ 48 'H' = 01001000
+ 45 'E' = 01000101
+ 4c 'L' = 01001100
+ 4c 'L' = 01001100
+ 4f 'O' = 01001111
+ 20 ' ' = 00100000
+ 57 'W' = 01010111
+ 4f 'O' = 01001111
+ 52 'R' = 01010010
+ 4c 'L' = 01001100
+ 44 'D' = 01000100
+ 2e '.' = 00101110
+ 2e '.' = 00101110
+ 2e '.' = 00101110
+ 20 ' ' = 00100000
+ 20 ' ' = 00100000
+ 20 ' ' = 00100000
+ 20 ' ' = 00100000
+
+# Encoded Colour Sequence Output
+0:Dark 1:Green 2:Dark 3:Blue 4:Dark 5:Cyan 6:Dark 7:Blue 8:Dark 9:Yellow 10:Dark 11:Green 12:Dark 13:Blue 14:Dark 15:Green 16:Dark 17:Green 18:Dark 19:White 20:Dark 21:Green 22:Dark 23:Blue 24:Dark 25:Red 26:Dark 27:Blue 28:Dark 29:White 30:Dark 31:Green 32:Dark 33:Blue 34:Dark 35:Red 36:Dark 37:Blue 38:Dark 39:White 40:Dark 41:Green 42:Dark 43:Blue 44:Dark 45:Red 46:Dark 47:Red 48:Dark 49:White 50:Dark 51:Blue 52:Dark 53:Cyan 54:Dark 55:Blue 56:Dark 57:Blue 58:Dark 59:White 60:Dark 61:Green 62:Dark 63:Green 64:Dark 65:Green 66:Dark 67:Red 68:Dark 69:White 70:Dark 71:Green 72:Dark 73:Blue 74:Dark 75:Red 76:Dark 77:Red 78:Dark 79:White 80:Dark 81:Green 82:Dark 83:Green 84:Dark 85:Blue 86:Dark 87:Cyan 88:Dark 89:White 90:Dark 91:Green 92:Dark 93:Blue 94:Dark 95:Red 96:Dark 97:Blue 98:Dark 99:White 100:Dark 101:Green 102:Dark 103:Blue 104:Dark 105:Green 106:Dark 107:Blue 108:Dark 109:Yellow 110:Dark 111:Blue 112:Dark 113:Cyan 114:Dark 115:Red 116:Dark 117:Cyan 118:Dark 119:Yellow 120:Dark 121:Blue 122:Dark 123:Cyan 124:Dark 125:Red 126:Dark 127:Cyan 128:Dark 129:Yellow 130:Dark 131:Blue 132:Dark 133:Cyan 134:Dark 135:Red 136:Dark 137:Cyan 138:Dark 139:Yellow 140:Dark 141:Blue 142:Dark 143:Cyan 144:Dark 145:Blue 146:Dark 147:Blue 148:Dark 149:White 150:Dark 151:Blue 152:Dark 153:Cyan 154:Dark 155:Blue 156:Dark 157:Blue 158:Dark 159:White 160:Dark 161:Blue 162:Dark 163:Cyan 164:Dark 165:Blue 166:Dark 167:Blue 168:Dark 169:White 170:Dark 171:Blue 172:Dark 173:Cyan 174:Dark 175:Blue 176:Dark 177:Blue 178:Dark 179:White 
+
+# Encoded Colour Sequence Output (compact)
+DGDBDCDBDYDGDBDGDGDWDGDBDRDBDWDGDBDRDBDWDGDBDRDRDWDBDCDBDBDWDGDGDGDRDWDGDBDRDRDWDGDGDBDCDWDGDBDRDBDWDGDBDGDBDYDBDCDRDCDYDBDCDRDCDYDBDCDRDCDYDBDCDBDBDWDBDCDBDBDWDBDCDBDBDWDBDCDBDBDW
+
+# Encoded Colour Sequence Output (marked)
+_D_ G _D_ B _D_ C _D_ B _D_!Y!_D_ G _D_ B _D_ G _D_ G _D_|W|_D_ G _D_ B _D_ R _D_ B _D_|W|_D_ G _D_ B _D_ R _D_ B _D_|W|_D_ G _D_ B _D_ R _D_ R _D_|W|_D_ B _D_ C _D_ B _D_ B _D_|W|_D_ G _D_ G _D_ G _D_ R _D_|W|_D_ G _D_ B _D_ R _D_ R _D_|W|_D_ G _D_ G _D_ B _D_ C _D_|W|_D_ G _D_ B _D_ R _D_ B _D_|W|_D_ G _D_ B _D_ G _D_ B _D_!Y!_D_ B _D_ C _D_ R _D_ C _D_!Y!_D_ B _D_ C _D_ R _D_ C _D_!Y!_D_ B _D_ C _D_ R _D_ C _D_!Y!_D_ B _D_ C _D_ B _D_ B _D_|W|_D_ B _D_ C _D_ B _D_ B _D_|W|_D_ B _D_ C _D_ B _D_ B _D_|W|_D_ B _D_ C _D_ B _D_ B _D_|W|
+
+# DECODING Test
+HELLO WORLD...    
+
+# Completed
