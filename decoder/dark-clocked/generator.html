@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Dark-Clocked — Generator</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #111; color: #ddd; font-family: monospace;
+      height: 100dvh; display: flex; flex-direction: column; overflow: hidden;
+    }
+    nav {
+      padding: 9px 14px; background: #181818; border-bottom: 1px solid #252525;
+      font-size: 13px; display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+    }
+    nav a { color: #6a6; text-decoration: none; }
+    nav a:hover { text-decoration: underline; }
+    nav span { color: #777; }
+
+    /* LED display */
+    #led-section {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px;
+      background: #0d0d0d;
+    }
+    #led {
+      width: 38vmin; height: 38vmin; border-radius: 50%;
+      background: #111; transition: background 0.04s, box-shadow 0.04s;
+    }
+    #colour-name { font-size: 16px; color: #888; letter-spacing: 1px; }
+    #pos-label   { font-size: 12px; color: #444; }
+
+    /* Sequence strip */
+    #seq-strip {
+      height: 32px; background: #161616; border-top: 1px solid #222;
+      overflow-x: auto; overflow-y: hidden; white-space: nowrap;
+      padding: 6px 8px; flex-shrink: 0;
+    }
+    .dot {
+      display: inline-block; width: 14px; height: 18px; border-radius: 2px;
+      margin-right: 1px; cursor: pointer; vertical-align: middle;
+      opacity: 0.5; transition: opacity 0.1s;
+    }
+    .dot.active { opacity: 1; outline: 2px solid #fff; outline-offset: 1px; }
+
+    /* Controls */
+    #controls {
+      padding: 8px 12px; background: #161616; border-top: 1px solid #222;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap; flex-shrink: 0;
+    }
+    button {
+      background: #222; color: #ccc; border: 1px solid #333;
+      padding: 6px 12px; font-family: monospace; font-size: 13px;
+      border-radius: 3px; cursor: pointer; -webkit-tap-highlight-color: transparent;
+    }
+    button:hover { background: #2e2e2e; }
+    button:active { background: #3a3a3a; }
+    #play-btn { border-color: #2e5e2e; color: #6c6; }
+    label { font-size: 12px; color: #666; display: flex; align-items: center; gap: 6px; margin-left: auto; }
+    input[type=range] { width: 80px; accent-color: #4a4; }
+
+    /* Input */
+    #input-row {
+      padding: 8px 12px; background: #1a1a1a; border-top: 1px solid #222;
+      display: flex; gap: 8px; flex-shrink: 0;
+    }
+    #text-input {
+      flex: 1; background: #111; color: #ddd; border: 1px solid #333;
+      padding: 7px 10px; font-family: monospace; font-size: 14px; border-radius: 3px;
+    }
+    #text-input:focus { outline: none; border-color: #4a4; }
+    #encode-btn { border-color: #4a4; color: #6c6; white-space: nowrap; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html">← index</a>
+  <span>/</span>
+  <span>Dark-Clocked — Generator</span>
+</nav>
+
+<div id="led-section">
+  <div id="led"></div>
+  <div id="colour-name">—</div>
+  <div id="pos-label">encode text to begin</div>
+</div>
+
+<div id="seq-strip"></div>
+
+<div id="controls">
+  <button onclick="stepBy(-1)">◀</button>
+  <button id="play-btn" onclick="togglePlay()">▶ Play</button>
+  <button onclick="stepBy(1)">▶</button>
+  <button onclick="resetPlayback()">⏹</button>
+  <label>
+    Speed:
+    <input type="range" id="speed-slider" min="1" max="10" value="6"
+           oninput="onSpeedChange()">
+    <span id="speed-label">300ms</span>
+  </label>
+</div>
+
+<div id="input-row">
+  <input type="text" id="text-input" value="HELLO WORLD" placeholder="Text to encode…">
+  <button id="encode-btn" onclick="encodeText()">Encode</button>
+</div>
+
+<script>
+  // ── Colours ──────────────────────────────────────────────────────────────
+
+  const COLOURS = {
+    DARK:   { css: '#0d0d0d', glow: null,                    name: 'Dark'   },
+    BLUE:   { css: '#2244ff', glow: '0 0 60px 28px #2244ff', name: 'Blue'   },
+    GREEN:  { css: '#00cc44', glow: '0 0 60px 28px #00cc44', name: 'Green'  },
+    CYAN:   { css: '#00aacc', glow: '0 0 60px 28px #00aacc', name: 'Cyan'   },
+    RED:    { css: '#dd2222', glow: '0 0 60px 28px #dd2222', name: 'Red'    },
+    MAGENTA:{ css: '#cc22bb', glow: '0 0 60px 28px #cc22bb', name: 'Magenta'},
+    YELLOW: { css: '#ccaa00', glow: '0 0 60px 28px #ccaa00', name: 'Yellow' },
+    WHITE:  { css: '#dddddd', glow: '0 0 60px 28px #dddddd', name: 'White'  },
+  };
+
+  // ── Encoding ─────────────────────────────────────────────────────────────
+
+  function parity(byte) {
+    let p = 0, b = byte;
+    while (b) { p ^= b & 1; b >>= 1; }
+    return (~p) & 1; // ODD
+  }
+
+  const DATA = ['BLUE', 'GREEN', 'CYAN', 'RED'];
+
+  function encode(text) {
+    const seq = [];
+    for (let i = 0; i < text.length; i++) {
+      const byte = text.charCodeAt(i) & 0xFF;
+      for (let bit = 3; bit >= 0; bit--) {
+        seq.push('DARK');
+        seq.push(DATA[(byte >> (bit * 2)) & 0x3]);
+      }
+      seq.push('DARK');
+      seq.push(parity(byte) === 0 ? 'WHITE' : 'YELLOW');
+    }
+    return seq;
+  }
+
+  // ── Playback ─────────────────────────────────────────────────────────────
+
+  let seq = [];
+  let pos = 0;
+  let playing = false;
+  let timer = null;
+
+  // Slider: 1=slowest(2000ms) 10=fastest(50ms) — exponential feel
+  const SPEEDS = [2000, 1200, 800, 500, 350, 250, 180, 120, 80, 50];
+
+  function getDelay() {
+    const v = parseInt(document.getElementById('speed-slider').value);
+    return SPEEDS[v - 1];
+  }
+
+  function onSpeedChange() {
+    const ms = getDelay();
+    document.getElementById('speed-label').textContent = ms + 'ms';
+    if (playing) { clearInterval(timer); timer = setInterval(advance, ms); }
+  }
+
+  function advance() {
+    if (pos >= seq.length) { stopPlay(); return; }
+    setPos(pos + 1);
+  }
+
+  function togglePlay() {
+    if (seq.length === 0) { encodeText(); }
+    playing ? stopPlay() : startPlay();
+  }
+
+  function startPlay() {
+    if (pos >= seq.length) pos = 0;
+    playing = true;
+    document.getElementById('play-btn').textContent = '⏸ Pause';
+    timer = setInterval(advance, getDelay());
+  }
+
+  function stopPlay() {
+    playing = false;
+    clearInterval(timer);
+    document.getElementById('play-btn').textContent = '▶ Play';
+  }
+
+  function resetPlayback() {
+    stopPlay();
+    setPos(0);
+  }
+
+  function stepBy(delta) {
+    stopPlay();
+    setPos(Math.max(0, Math.min(seq.length - 1, pos + delta)));
+  }
+
+  // ── Display ───────────────────────────────────────────────────────────────
+
+  function setPos(p) {
+    pos = p;
+    const strip = document.getElementById('seq-strip');
+    const dots = strip.querySelectorAll('.dot');
+    dots.forEach((d, i) => d.classList.toggle('active', i === pos));
+    if (dots[pos]) {
+      dots[pos].scrollIntoView({ block: 'nearest', inline: 'center' });
+    }
+
+    const c = seq[pos] ? COLOURS[seq[pos]] : COLOURS.DARK;
+    const led = document.getElementById('led');
+    led.style.background = c.css;
+    led.style.boxShadow = c.glow || 'none';
+    document.getElementById('colour-name').textContent = c.name;
+    document.getElementById('pos-label').textContent =
+      seq.length ? `${pos + 1} / ${seq.length}` : 'encode text to begin';
+  }
+
+  function renderStrip() {
+    const strip = document.getElementById('seq-strip');
+    strip.innerHTML = '';
+    seq.forEach((name, i) => {
+      const d = document.createElement('span');
+      d.className = 'dot';
+      d.style.background = COLOURS[name].css;
+      if (name !== 'DARK') d.title = COLOURS[name].name;
+      d.onclick = () => { stopPlay(); setPos(i); };
+      strip.appendChild(d);
+    });
+  }
+
+  function encodeText() {
+    const text = document.getElementById('text-input').value;
+    if (!text) return;
+    stopPlay();
+    seq = encode(text);
+    renderStrip();
+    setPos(0);
+  }
+
+  // Init
+  onSpeedChange();
+  encodeText();
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+Colour Seq Test
+===============
+# Nibble ENCODING & DECODING Test
+
+> colour prev = 0;
+1 1 | halfnibble in = 0, out = 0 ; colour curr = 1, prev = 0;
+1 1 | halfnibble in = 1, out = 1 ; colour curr = 2, prev = 0;
+1 1 | halfnibble in = 2, out = 2 ; colour curr = 3, prev = 0;
+1 1 | halfnibble in = 3, out = 3 ; colour curr = 4, prev = 0;
+
+> colour prev = 1;
+1 1 | halfnibble in = 0, out = 0 ; colour curr = 2, prev = 1;
+1 1 | halfnibble in = 1, out = 1 ; colour curr = 3, prev = 1;
+1 1 | halfnibble in = 2, out = 2 ; colour curr = 4, prev = 1;
+1 1 | halfnibble in = 3, out = 3 ; colour curr = 5, prev = 1;
+
+> colour prev = 2;
+1 1 | halfnibble in = 0, out = 0 ; colour curr = 3, prev = 2;
+1 1 | halfnibble in = 1, out = 1 ; colour curr = 4, prev = 2;
+1 1 | halfnibble in = 2, out = 2 ; colour curr = 5, prev = 2;
+1 1 | halfnibble in = 3, out = 3 ; colour curr = 1, prev = 2;
+
+> colour prev = 3;
+1 1 | halfnibble in = 0, out = 0 ; colour curr = 4, prev = 3;
+1 1 | halfnibble in = 1, out = 1 ; colour curr = 5, prev = 3;
+1 1 | halfnibble in = 2, out = 2 ; colour curr = 1, prev = 3;
+1 1 | halfnibble in = 3, out = 3 ; colour curr = 2, prev = 3;
+
+> colour prev = 4;
+1 1 | halfnibble in = 0, out = 0 ; colour curr = 5, prev = 4;
+1 1 | halfnibble in = 1, out = 1 ; colour curr = 1, prev = 4;
+1 1 | halfnibble in = 2, out = 2 ; colour curr = 2, prev = 4;
+1 1 | halfnibble in = 3, out = 3 ; colour curr = 3, prev = 4;
+
+> colour prev = 5;
+1 1 | halfnibble in = 0, out = 0 ; colour curr = 1, prev = 5;
+1 1 | halfnibble in = 1, out = 1 ; colour curr = 2, prev = 5;
+1 1 | halfnibble in = 2, out = 2 ; colour curr = 3, prev = 5;
+1 1 | halfnibble in = 3, out = 3 ; colour curr = 4, prev = 5;
+
+> colour prev = 6;
+1 1 | halfnibble in = 0, out = 0 ; colour curr = 1, prev = 6;
+1 1 | halfnibble in = 1, out = 1 ; colour curr = 2, prev = 6;
+1 1 | halfnibble in = 2, out = 2 ; colour curr = 3, prev = 6;
+1 1 | halfnibble in = 3, out = 3 ; colour curr = 4, prev = 6;
+
+> colour prev = 7;
+1 1 | halfnibble in = 0, out = 0 ; colour curr = 1, prev = 7;
+1 1 | halfnibble in = 1, out = 1 ; colour curr = 2, prev = 7;
+1 1 | halfnibble in = 2, out = 2 ; colour curr = 3, prev = 7;
+1 1 | halfnibble in = 3, out = 3 ; colour curr = 4, prev = 7;
+
+
+# ENCODING Input
+ 48 'H' = 01001000
+ 45 'E' = 01000101
+ 4c 'L' = 01001100
+ 4c 'L' = 01001100
+ 4f 'O' = 01001111
+ 20 ' ' = 00100000
+ 57 'W' = 01010111
+ 4f 'O' = 01001111
+ 52 'R' = 01010010
+ 4c 'L' = 01001100
+ 44 'D' = 01000100
+ 2e '.' = 00101110
+ 2e '.' = 00101110
+ 2e '.' = 00101110
+ 20 ' ' = 00100000
+ 20 ' ' = 00100000
+ 20 ' ' = 00100000
+ 20 ' ' = 00100000
+
+
+# Encoded Colour Seqence Output
+
+
+# Encoded Colour Seqence Output (Compact)
+
+
+# Encoded Colour Seqence Output (marked)
+
+
+# DECODING Test
+
+
+# Completed

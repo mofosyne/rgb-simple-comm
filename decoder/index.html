@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RGB Simple Comm — Tools</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #111; color: #ddd; font-family: monospace;
+      min-height: 100dvh; padding: 24px 16px;
+    }
+    h1 { font-size: 18px; margin-bottom: 6px; }
+    .subtitle { font-size: 13px; color: #666; margin-bottom: 32px; }
+    .approach { margin-bottom: 28px; }
+    .approach h2 { font-size: 14px; color: #aaa; margin-bottom: 4px; }
+    .approach p { font-size: 12px; color: #666; margin-bottom: 10px; line-height: 1.5; }
+    .colours {
+      display: flex; gap: 4px; margin-bottom: 10px; flex-wrap: wrap;
+    }
+    .swatch {
+      font-size: 11px; padding: 2px 7px; border-radius: 2px; color: #000;
+    }
+    .links { display: flex; gap: 8px; }
+    a.btn {
+      display: inline-block; padding: 7px 16px;
+      background: #1e1e1e; border: 1px solid #333;
+      color: #bbb; text-decoration: none; font-size: 13px; border-radius: 3px;
+    }
+    a.btn:hover { background: #2a2a2a; color: #ddd; }
+    a.btn.gen  { border-color: #2a4a2a; color: #6b6; }
+    a.btn.dec  { border-color: #2a2a4a; color: #66b; }
+    hr { border: none; border-top: 1px solid #222; margin: 28px 0; }
+    .tag { font-size: 11px; color: #555; }
+  </style>
+</head>
+<body>
+
+<h1>RGB Simple Comm</h1>
+<p class="subtitle">Web tools — generator and camera decoder for each encoding approach</p>
+
+<div class="approach">
+  <h2>Dark-Clocked <span class="tag">machine-readable</span></h2>
+  <p>
+    DARK acts as an explicit separator between each colour pulse. Stateless decoder —
+    each colour means the same thing regardless of what came before. Aimed at smartphone
+    cameras and RGB sensors.
+  </p>
+  <div class="colours">
+    <span class="swatch" style="background:#2244ff;color:#fff">Blue 00</span>
+    <span class="swatch" style="background:#00cc44;color:#000">Green 01</span>
+    <span class="swatch" style="background:#00aacc;color:#000">Cyan 10</span>
+    <span class="swatch" style="background:#dd2222;color:#fff">Red 11</span>
+    <span class="swatch" style="background:#dddddd;color:#000">White mark↓0</span>
+    <span class="swatch" style="background:#ccaa00;color:#000">Yellow mark↓1</span>
+  </div>
+  <div class="links">
+    <a class="btn gen" href="dark-clocked/generator.html">Generator</a>
+    <a class="btn dec" href="dark-clocked/decoder.html">Camera Decoder</a>
+  </div>
+</div>
+
+<hr>
+
+<div class="approach">
+  <h2>Human-Readable <span class="tag">for human observers</span></h2>
+  <p>
+    Designed for a field technician who watches the LED and reads the colour sequence
+    verbally. Cyan excluded (too easily called "light blue"). Green and Red serve as
+    both idle status indicators and byte markers.
+  </p>
+  <div class="colours">
+    <span class="swatch" style="background:#2244ff;color:#fff">Blue 00</span>
+    <span class="swatch" style="background:#cc22bb;color:#fff">Magenta 01</span>
+    <span class="swatch" style="background:#ccaa00;color:#000">Yellow 10</span>
+    <span class="swatch" style="background:#dddddd;color:#000">White 11</span>
+    <span class="swatch" style="background:#00cc44;color:#000">Green mark↓0</span>
+    <span class="swatch" style="background:#dd2222;color:#fff">Red mark↓1</span>
+  </div>
+  <div class="links">
+    <a class="btn gen" href="human-readable/generator.html">Generator</a>
+    <a class="btn dec" href="human-readable/decoder.html">Camera Decoder</a>
+  </div>
+</div>
+
+<hr>
+
+<div class="approach">
+  <h2>Transition-Clocked <span class="tag">original approach</span></h2>
+  <p>
+    The original hand-written design (2016). Data encoded as transitions between colours
+    — the colour change itself is the clock event. No DARK separators; the LED stays lit
+    continuously. Stateful decoder using ring-offset arithmetic.
+  </p>
+  <div class="colours">
+    <span class="swatch" style="background:#2244ff;color:#fff">Blue</span>
+    <span class="swatch" style="background:#00cc44;color:#000">Green</span>
+    <span class="swatch" style="background:#00aacc;color:#000">Cyan</span>
+    <span class="swatch" style="background:#dd2222;color:#fff">Red</span>
+    <span class="swatch" style="background:#cc22bb;color:#fff">Magenta</span>
+    <span class="swatch" style="background:#dddddd;color:#000">White mark↓0</span>
+    <span class="swatch" style="background:#ccaa00;color:#000">Yellow mark↓1</span>
+  </div>
+  <div class="links">
+    <a class="btn gen" href="transition-clocked/generator.html">Generator</a>
+    <a class="btn dec" href="transition-clocked/decoder.html">Camera Decoder</a>
+  </div>
+</div>
+
+</body>
+</html>
