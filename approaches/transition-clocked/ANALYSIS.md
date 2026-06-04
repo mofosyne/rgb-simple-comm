@@ -77,6 +77,22 @@ an interesting historical artefact. It was designed before that philosophy was
 fully settled, and its complexity is a concrete illustration of what the
 philosophy is pushing against.
 
+## The Ergonomic Advantage That Gets Overlooked
+
+There is one genuine advantage of transition clocking that has nothing to do with
+speed: the LED stays continuously lit during transmission. It just changes colour.
+
+A dark-clocked approach turns the LED off between every pulse, which at any
+reasonable data rate produces a visible strobe effect. For a status LED on a
+device that lives in someone's peripheral vision, that is actively disruptive.
+Transition clocking, by contrast, produces a smoothly shifting colour wash that
+is much less intrusive as an ambient indicator.
+
+This matters most for the original intended use case — a debug/status LED running
+continuously in the background on embedded hardware. In that context, the
+continuously-lit behaviour is a real ergonomic benefit, even if it came about as
+a side effect of the clocking design rather than a deliberate choice.
+
 ## Relation to Other Approaches
 
 - `approaches/dark-clocked/` explores what happens when Dark is used as an
