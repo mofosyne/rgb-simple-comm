@@ -1,4 +1,4 @@
-APPROACHES = approaches/transition-clocked approaches/dark-clocked
+APPROACHES = approaches/transition-clocked approaches/dark-clocked approaches/human-readable
 
 all:
 	$(foreach d,$(APPROACHES),$(MAKE) -C $(d);)

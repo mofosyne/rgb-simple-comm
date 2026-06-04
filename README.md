@@ -27,12 +27,23 @@ made.
 
 ### [`approaches/dark-clocked/`](approaches/dark-clocked/)
 
-An alternative where DARK (all LEDs off) acts as an explicit separator between
-each colour pulse. Each colour means the same thing regardless of what came
-before, making the decoder stateless. A missed pulse corrupts only that 2-bit
-value rather than cascading through the rest of the byte.
+Machine-readable. DARK (all LEDs off) acts as an explicit separator between
+each colour pulse. Stateless decoder — each colour means the same thing
+regardless of what came before. A missed pulse corrupts only that 2-bit value.
 
-The cost is roughly 2× the LED transitions per byte.
+Data colours: Blue, Green, Cyan, Red. Roughly 2× the LED transitions per byte
+compared to transition-clocked.
+
+### [`approaches/human-readable/`](approaches/human-readable/)
+
+Designed for a human observer — a field technician who can watch the LED and
+call out the colour sequence verbally.
+
+Cyan is excluded (too easily called "light blue" in speech, and can visually
+pass for blue on a real LED). Data colours are Blue, Magenta, Yellow, White —
+perceptually and verbally distinct. Green and Red serve as idle indicators
+(steady during normal/fault states) and double as byte markers at each byte
+boundary.
 
 ## Colour States (common to all approaches)
 

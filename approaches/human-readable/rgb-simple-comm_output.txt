@@ -1,0 +1,36 @@
+Human-Readable RGB Comm Test
+============================
+
+# ENCODING Input
+ 48 'H' = 01001000
+ 45 'E' = 01000101
+ 4c 'L' = 01001100
+ 4c 'L' = 01001100
+ 4f 'O' = 01001111
+ 20 ' ' = 00100000
+ 57 'W' = 01010111
+ 4f 'O' = 01001111
+ 52 'R' = 01010010
+ 4c 'L' = 01001100
+ 44 'D' = 01000100
+ 2e '.' = 00101110
+ 2e '.' = 00101110
+ 2e '.' = 00101110
+ 20 ' ' = 00100000
+ 20 ' ' = 00100000
+ 20 ' ' = 00100000
+ 20 ' ' = 00100000
+
+# Encoded Colour Sequence Output
+0:Dark 1:Magenta 2:Dark 3:Blue 4:Dark 5:Yellow 6:Dark 7:Blue 8:Dark 9:Red 10:Dark 11:Magenta 12:Dark 13:Blue 14:Dark 15:Magenta 16:Dark 17:Magenta 18:Dark 19:Green 20:Dark 21:Magenta 22:Dark 23:Blue 24:Dark 25:White 26:Dark 27:Blue 28:Dark 29:Green 30:Dark 31:Magenta 32:Dark 33:Blue 34:Dark 35:White 36:Dark 37:Blue 38:Dark 39:Green 40:Dark 41:Magenta 42:Dark 43:Blue 44:Dark 45:White 46:Dark 47:White 48:Dark 49:Green 50:Dark 51:Blue 52:Dark 53:Yellow 54:Dark 55:Blue 56:Dark 57:Blue 58:Dark 59:Green 60:Dark 61:Magenta 62:Dark 63:Magenta 64:Dark 65:Magenta 66:Dark 67:White 68:Dark 69:Green 70:Dark 71:Magenta 72:Dark 73:Blue 74:Dark 75:White 76:Dark 77:White 78:Dark 79:Green 80:Dark 81:Magenta 82:Dark 83:Magenta 84:Dark 85:Blue 86:Dark 87:Yellow 88:Dark 89:Green 90:Dark 91:Magenta 92:Dark 93:Blue 94:Dark 95:White 96:Dark 97:Blue 98:Dark 99:Green 100:Dark 101:Magenta 102:Dark 103:Blue 104:Dark 105:Magenta 106:Dark 107:Blue 108:Dark 109:Red 110:Dark 111:Blue 112:Dark 113:Yellow 114:Dark 115:White 116:Dark 117:Yellow 118:Dark 119:Red 120:Dark 121:Blue 122:Dark 123:Yellow 124:Dark 125:White 126:Dark 127:Yellow 128:Dark 129:Red 130:Dark 131:Blue 132:Dark 133:Yellow 134:Dark 135:White 136:Dark 137:Yellow 138:Dark 139:Red 140:Dark 141:Blue 142:Dark 143:Yellow 144:Dark 145:Blue 146:Dark 147:Blue 148:Dark 149:Green 150:Dark 151:Blue 152:Dark 153:Yellow 154:Dark 155:Blue 156:Dark 157:Blue 158:Dark 159:Green 160:Dark 161:Blue 162:Dark 163:Yellow 164:Dark 165:Blue 166:Dark 167:Blue 168:Dark 169:Green 170:Dark 171:Blue 172:Dark 173:Yellow 174:Dark 175:Blue 176:Dark 177:Blue 178:Dark 179:Green 
+
+# Encoded Colour Sequence Output (compact)
+DMDBDYDBDRDMDBDMDMDGDMDBDWDBDGDMDBDWDBDGDMDBDWDWDGDBDYDBDBDGDMDMDMDWDGDMDBDWDWDGDMDMDBDYDGDMDBDWDBDGDMDBDMDBDRDBDYDWDYDRDBDYDWDYDRDBDYDWDYDRDBDYDBDBDGDBDYDBDBDGDBDYDBDBDGDBDYDBDBDG
+
+# Encoded Colour Sequence Output (marked)
+_D_ M _D_ B _D_ Y _D_ B _D_|R|_D_ M _D_ B _D_ M _D_ M _D_|G|_D_ M _D_ B _D_ W _D_ B _D_|G|_D_ M _D_ B _D_ W _D_ B _D_|G|_D_ M _D_ B _D_ W _D_ W _D_|G|_D_ B _D_ Y _D_ B _D_ B _D_|G|_D_ M _D_ M _D_ M _D_ W _D_|G|_D_ M _D_ B _D_ W _D_ W _D_|G|_D_ M _D_ M _D_ B _D_ Y _D_|G|_D_ M _D_ B _D_ W _D_ B _D_|G|_D_ M _D_ B _D_ M _D_ B _D_|R|_D_ B _D_ Y _D_ W _D_ Y _D_|R|_D_ B _D_ Y _D_ W _D_ Y _D_|R|_D_ B _D_ Y _D_ W _D_ Y _D_|R|_D_ B _D_ Y _D_ B _D_ B _D_|G|_D_ B _D_ Y _D_ B _D_ B _D_|G|_D_ B _D_ Y _D_ B _D_ B _D_|G|_D_ B _D_ Y _D_ B _D_ B _D_|G|
+
+# DECODING Test
+HELLO WORLD...    
+
+# Completed
