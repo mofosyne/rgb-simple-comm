@@ -2,320 +2,110 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>RGB Comm Decoder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RGB Simple Comm — Tools</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
-      background: #111;
-      color: #ddd;
-      font-family: monospace;
-      height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+      background: #111; color: #ddd; font-family: monospace;
+      min-height: 100dvh; padding: 24px 16px;
     }
-
-    /* ── Camera view ── */
-    #camera-wrap {
-      position: relative;
-      flex: 1;
-      overflow: hidden;
-      background: #000;
+    h1 { font-size: 18px; margin-bottom: 6px; }
+    .subtitle { font-size: 13px; color: #666; margin-bottom: 32px; }
+    .approach { margin-bottom: 28px; }
+    .approach h2 { font-size: 14px; color: #aaa; margin-bottom: 4px; }
+    .approach p { font-size: 12px; color: #666; margin-bottom: 10px; line-height: 1.5; }
+    .colours {
+      display: flex; gap: 4px; margin-bottom: 10px; flex-wrap: wrap;
     }
-
-    #video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .swatch {
+      font-size: 11px; padding: 2px 7px; border-radius: 2px; color: #000;
     }
-
-    /* Sampling reticle */
-    #reticle {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 72px; height: 72px;
-      border: 2px solid rgba(255,255,255,0.6);
-      border-radius: 50%;
-      pointer-events: none;
+    .links { display: flex; gap: 8px; }
+    a.btn {
+      display: inline-block; padding: 7px 16px;
+      background: #1e1e1e; border: 1px solid #333;
+      color: #bbb; text-decoration: none; font-size: 13px; border-radius: 3px;
     }
-
-    /* Crosshair lines */
-    #reticle::before, #reticle::after {
-      content: '';
-      position: absolute;
-      background: rgba(255,255,255,0.5);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-    }
-    #reticle::before { width: 1px; height: 24px; }
-    #reticle::after  { width: 24px; height: 1px; }
-
-    /* Color sample dot inside reticle */
-    #sample-dot {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      background: #333;
-      border: 1px solid rgba(255,255,255,0.3);
-      transition: background 0.05s;
-      pointer-events: none;
-    }
-
-    /* ── Bottom panel ── */
-    #panel {
-      padding: 14px 16px 20px;
-      background: #1a1a1a;
-      border-top: 1px solid #2a2a2a;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    #colour-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      color: #888;
-    }
-
-    #colour-swatch {
-      width: 16px; height: 16px;
-      border-radius: 3px;
-      background: #333;
-      border: 1px solid #444;
-      flex-shrink: 0;
-    }
-
-    #output-box {
-      background: #111;
-      border: 1px solid #2a2a2a;
-      border-radius: 4px;
-      padding: 8px 10px;
-      min-height: 48px;
-      font-size: 20px;
-      letter-spacing: 1px;
-      color: #3f3;
-      word-break: break-all;
-    }
-
-    #output-box:empty::before {
-      content: 'Waiting for signal…';
-      color: #444;
-      font-size: 14px;
-    }
-
-    #controls {
-      display: flex;
-      gap: 8px;
-    }
-
-    button {
-      flex: 1;
-      background: #252525;
-      color: #ccc;
-      border: 1px solid #3a3a3a;
-      padding: 9px 0;
-      font-family: monospace;
-      font-size: 14px;
-      border-radius: 4px;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-    button:active { background: #3a3a3a; }
-
-    #start-btn {
-      background: #1a2e1a;
-      border-color: #2e6e2e;
-      color: #6e6;
-    }
-
-    /* hidden canvas used for pixel sampling */
-    canvas { display: none; }
+    a.btn:hover { background: #2a2a2a; color: #ddd; }
+    a.btn.gen  { border-color: #2a4a2a; color: #6b6; }
+    a.btn.dec  { border-color: #2a2a4a; color: #66b; }
+    hr { border: none; border-top: 1px solid #222; margin: 28px 0; }
+    .tag { font-size: 11px; color: #555; }
   </style>
 </head>
 <body>
 
-<div id="camera-wrap">
-  <video id="video" autoplay playsinline muted></video>
-  <canvas id="canvas"></canvas>
-  <div id="reticle">
-    <div id="sample-dot"></div>
+<h1>RGB Simple Comm</h1>
+<p class="subtitle">Web tools — generator and camera decoder for each encoding approach</p>
+
+<div class="approach">
+  <h2>Dark-Clocked <span class="tag">machine-readable</span></h2>
+  <p>
+    DARK acts as an explicit separator between each colour pulse. Stateless decoder —
+    each colour means the same thing regardless of what came before. Aimed at smartphone
+    cameras and RGB sensors.
+  </p>
+  <div class="colours">
+    <span class="swatch" style="background:#2244ff;color:#fff">Blue 00</span>
+    <span class="swatch" style="background:#00cc44;color:#000">Green 01</span>
+    <span class="swatch" style="background:#00aacc;color:#000">Cyan 10</span>
+    <span class="swatch" style="background:#dd2222;color:#fff">Red 11</span>
+    <span class="swatch" style="background:#dddddd;color:#000">White mark↓0</span>
+    <span class="swatch" style="background:#ccaa00;color:#000">Yellow mark↓1</span>
+  </div>
+  <div class="links">
+    <a class="btn gen" href="dark-clocked/generator.html">Generator</a>
+    <a class="btn dec" href="dark-clocked/decoder.html">Camera Decoder</a>
   </div>
 </div>
 
-<div id="panel">
-  <div id="colour-row">
-    <div id="colour-swatch"></div>
-    <span>Detected: <span id="colour-name">—</span></span>
+<hr>
+
+<div class="approach">
+  <h2>Human-Readable <span class="tag">for human observers</span></h2>
+  <p>
+    Designed for a field technician who watches the LED and reads the colour sequence
+    verbally. Cyan excluded (too easily called "light blue"). Green and Red serve as
+    both idle status indicators and byte markers.
+  </p>
+  <div class="colours">
+    <span class="swatch" style="background:#2244ff;color:#fff">Blue 00</span>
+    <span class="swatch" style="background:#cc22bb;color:#fff">Magenta 01</span>
+    <span class="swatch" style="background:#ccaa00;color:#000">Yellow 10</span>
+    <span class="swatch" style="background:#dddddd;color:#000">White 11</span>
+    <span class="swatch" style="background:#00cc44;color:#000">Green mark↓0</span>
+    <span class="swatch" style="background:#dd2222;color:#fff">Red mark↓1</span>
   </div>
-  <div id="output-box"></div>
-  <div id="controls">
-    <button id="start-btn" onclick="startCamera()">Start Camera</button>
-    <button onclick="clearOutput()">Clear</button>
+  <div class="links">
+    <a class="btn gen" href="human-readable/generator.html">Generator</a>
+    <a class="btn dec" href="human-readable/decoder.html">Camera Decoder</a>
   </div>
 </div>
 
-<script>
-  // ── Colour enum (matches dark-clocked approach) ──────────────────────────
+<hr>
 
-  const C = { DARK:0, BLUE:1, GREEN:2, CYAN:3, RED:4, MAGENTA:5, YELLOW:6, WHITE:7 };
-
-  const COLOUR_NAME = ['Dark','Blue','Green','Cyan','Red','Magenta','Yellow','White'];
-
-  const COLOUR_CSS = [
-    '#1a1a1a', // DARK
-    '#3333ff', // BLUE
-    '#00cc44', // GREEN
-    '#00bbbb', // CYAN
-    '#cc2222', // RED
-    '#bb22bb', // MAGENTA
-    '#ccaa00', // YELLOW
-    '#dddddd', // WHITE
-  ];
-
-  // ── Colour classification ────────────────────────────────────────────────
-  //
-  // Each R/G/B channel is thresholded relative to the brightest channel.
-  // If the overall brightness is below a floor, the result is DARK.
-  // This handles varying ambient light without requiring calibration.
-
-  function classifyColour(r, g, b) {
-    const max = Math.max(r, g, b);
-    if (max < 45) return C.DARK;
-    const t = max * 0.42;
-    const rb = r > t ? 1 : 0;
-    const gb = g > t ? 1 : 0;
-    const bb = b > t ? 1 : 0;
-    return (rb << 2) | (gb << 1) | bb;  // maps directly to enum values 0-7
-  }
-
-  // ── Dark-clocked decoder ─────────────────────────────────────────────────
-  //
-  // Pulse stream: DARK DATA DARK DATA DARK DATA DARK DATA DARK MARK ...
-  // Decoder ignores DARK, collects 4 data pulses, emits byte on mark.
-  // A missed pulse corrupts only that 2-bit value, not subsequent bytes.
-
-  let bits_received = 0;
-  let current_byte = 0;
-
-  const DATA_BITS = {
-    [C.BLUE]:  0b00,
-    [C.GREEN]: 0b01,
-    [C.CYAN]:  0b10,
-    [C.RED]:   0b11,
-  };
-
-  function decodePulse(colour) {
-    if (colour === C.DARK) return;
-
-    if (colour === C.WHITE || colour === C.YELLOW) {
-      if (bits_received === 4) {
-        document.getElementById('output-box').textContent += String.fromCharCode(current_byte & 0xFF);
-      }
-      bits_received = 0;
-      current_byte = 0;
-      return;
-    }
-
-    const bits = DATA_BITS[colour];
-    if (bits !== undefined && bits_received < 4) {
-      current_byte = (current_byte << 2) | bits;
-      bits_received++;
-    }
-  }
-
-  // ── Debounce ─────────────────────────────────────────────────────────────
-  //
-  // Require a colour to be stable for DEBOUNCE_FRAMES consecutive frames
-  // before treating it as a real pulse. Prevents noise during LED transitions.
-
-  const DEBOUNCE_FRAMES = 3;
-  let stable_colour = C.DARK;
-  let stable_count = 0;
-  let last_emitted = C.DARK;
-
-  function feedColour(colour) {
-    if (colour === stable_colour) {
-      stable_count++;
-    } else {
-      stable_colour = colour;
-      stable_count = 1;
-    }
-
-    if (stable_count >= DEBOUNCE_FRAMES && colour !== last_emitted) {
-      last_emitted = colour;
-      decodePulse(colour);
-    }
-
-    // Update UI
-    document.getElementById('colour-name').textContent = COLOUR_NAME[colour];
-    document.getElementById('colour-swatch').style.background = COLOUR_CSS[colour];
-    document.getElementById('sample-dot').style.background = COLOUR_CSS[colour];
-  }
-
-  // ── Sampling loop ────────────────────────────────────────────────────────
-
-  const video  = document.getElementById('video');
-  const canvas = document.getElementById('canvas');
-  const ctx    = canvas.getContext('2d', { willReadFrequently: true });
-
-  const SAMPLE_PX = 40;  // sample a 40×40 region at center
-
-  function tick() {
-    if (!video.srcObject) return;
-    requestAnimationFrame(tick);
-
-    const w = canvas.width, h = canvas.height;
-    const sx = Math.floor((w - SAMPLE_PX) / 2);
-    const sy = Math.floor((h - SAMPLE_PX) / 2);
-
-    ctx.drawImage(video, 0, 0, w, h);
-    const px = ctx.getImageData(sx, sy, SAMPLE_PX, SAMPLE_PX).data;
-
-    let r = 0, g = 0, b = 0;
-    const n = SAMPLE_PX * SAMPLE_PX;
-    for (let i = 0; i < px.length; i += 4) { r += px[i]; g += px[i+1]; b += px[i+2]; }
-
-    feedColour(classifyColour(r / n, g / n, b / n));
-  }
-
-  // ── Camera startup ───────────────────────────────────────────────────────
-
-  async function startCamera() {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 } }
-      });
-      video.srcObject = stream;
-      await video.play();
-      canvas.width  = video.videoWidth  || 1280;
-      canvas.height = video.videoHeight || 720;
-      video.addEventListener('resize', () => {
-        canvas.width  = video.videoWidth;
-        canvas.height = video.videoHeight;
-      });
-      requestAnimationFrame(tick);
-      const btn = document.getElementById('start-btn');
-      btn.textContent = 'Camera On';
-      btn.disabled = true;
-    } catch (e) {
-      alert('Camera error: ' + e.message);
-    }
-  }
-
-  function clearOutput() {
-    document.getElementById('output-box').textContent = '';
-    bits_received = 0;
-    current_byte = 0;
-    last_emitted = C.DARK;
-  }
-</script>
+<div class="approach">
+  <h2>Transition-Clocked <span class="tag">original approach</span></h2>
+  <p>
+    The original hand-written design (2016). Data encoded as transitions between colours
+    — the colour change itself is the clock event. No DARK separators; the LED stays lit
+    continuously. Stateful decoder using ring-offset arithmetic.
+  </p>
+  <div class="colours">
+    <span class="swatch" style="background:#2244ff;color:#fff">Blue</span>
+    <span class="swatch" style="background:#00cc44;color:#000">Green</span>
+    <span class="swatch" style="background:#00aacc;color:#000">Cyan</span>
+    <span class="swatch" style="background:#dd2222;color:#fff">Red</span>
+    <span class="swatch" style="background:#cc22bb;color:#fff">Magenta</span>
+    <span class="swatch" style="background:#dddddd;color:#000">White mark↓0</span>
+    <span class="swatch" style="background:#ccaa00;color:#000">Yellow mark↓1</span>
+  </div>
+  <div class="links">
+    <a class="btn gen" href="transition-clocked/generator.html">Generator</a>
+    <a class="btn dec" href="transition-clocked/decoder.html">Camera Decoder</a>
+  </div>
+</div>
 
 </body>
 </html>
