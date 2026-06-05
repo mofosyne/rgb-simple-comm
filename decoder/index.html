@@ -49,7 +49,11 @@
 <p class="subtitle">Web tools — generator and camera decoder for each encoding approach</p>
 
 <div class="qr-wrap">
-  <div class="qr-box" id="qrcode"></div>
+  <div class="qr-box">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?qzone=1&data=https%3A%2F%2Fmofosyne.github.io%2Frgb%2Dsimple%2Dcomm%2F"
+         alt="QR code for mofosyne.github.io/rgb-simple-comm"
+         width="128" height="128">
+  </div>
   <div class="qr-text">
     <p>Scan to open on your phone — the camera decoders need a real camera to work.</p>
     <code>mofosyne.github.io/rgb-simple-comm</code>
@@ -124,17 +128,6 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
-        integrity="sha512-CNgIRecGo7nphbeAlkE28tkylSpH/uRRNZkvneikFdqiL9rMTdVFPjDjbFKburTt77mu3TgTkm88P2MtZAi8g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-  new QRCode(document.getElementById('qrcode'), {
-    text: 'https://mofosyne.github.io/rgb-simple-comm/',
-    width: 128, height: 128,
-    colorDark: '#dddddd',
-    colorLight: '#111111',
-    correctLevel: QRCode.CorrectLevel.M
-  });
-</script>
+
 </body>
 </html>
